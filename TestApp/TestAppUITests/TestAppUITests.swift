@@ -27,11 +27,6 @@ extension SwiftBehaveTest {
 
     func givenMainView(app: XCUIApplication) {
         
-        let detailNavigationBar = app.navigationBars["Detail"]
-        if (detailNavigationBar.exists) {
-            detailNavigationBar.buttons.elementBoundByIndex(0).tap()
-        }
-        
         let masterNavigationBar = app.navigationBars["Master"]
         
         XCTAssert(masterNavigationBar.exists, "main view could not be opened")
@@ -45,7 +40,7 @@ extension SwiftBehaveTest {
     func thenCheckItemCount(app: XCUIApplication, count: String) {
         
         let expectedCount = UInt(count)!
-        let actualCount = app.tables.elementBoundByIndex(0).cells.count
+        let actualCount = app.tables.element(boundBy: 0).cells.count
         
         XCTAssert(expectedCount == actualCount, "actual item count (\(actualCount)) does not match expected item count (\(expectedCount))")
     }
@@ -53,7 +48,7 @@ extension SwiftBehaveTest {
     func whenTapItemAtPosition(app: XCUIApplication, position: String) {
         
         let index = UInt(position)! - 1
-        app.tables.elementBoundByIndex(0).cells.elementBoundByIndex(index).tap()
+        app.tables.element(boundBy: 0).cells.element(boundBy: Int(index)).tap()
     }
     
     func thenDetailsVisible(app: XCUIApplication) {
@@ -69,9 +64,9 @@ extension SwiftBehaveTest {
         
         let index = UInt(position)! - 1
         // delete
-        app.tables.elementBoundByIndex(0).cells.elementBoundByIndex(index).buttons.elementBoundByIndex(0).tap()
+        app.tables.element(boundBy: 0).cells.element(boundBy: Int(index)).buttons.element(boundBy: 0).tap()
         // confirm
-        app.tables.elementBoundByIndex(0).cells.elementBoundByIndex(index).buttons["Delete"].tap()
+        app.tables.element(boundBy: 0).cells.element(boundBy: Int(index)).buttons["Delete"].tap()
         
         app.buttons["Done"].tap()
     }
